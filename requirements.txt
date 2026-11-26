@@ -1,6 +1,7 @@
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch
 torchvision
+timm
 numpy
 scipy
 scikit-learn
@@ -10,5 +11,3 @@ matplotlib
 pandas
 streamlit
 anthropic
-timm
-packagename
