@@ -143,7 +143,7 @@ background:#0d1526!important;border:1px solid rgba(0,255,200,.4);border-radius:1
 [data-testid="stHeading"] *{color:#e6edf7!important}
 </style>
 """
-st.markdown(CSS, unsafe_allow_html=True)
+st.html(CSS)
 
 # ---------------------------------------------------------------------
 # Optional extra styling and effects from separate files (style.css, script.js)
@@ -153,7 +153,7 @@ _css_file = os.path.join(_here, "style.css")
 _js_file = os.path.join(_here, "script.js")
 if os.path.exists(_css_file):
     with open(_css_file, encoding="utf-8") as _f:
-        st.markdown(f"<style>{_f.read()}</style>", unsafe_allow_html=True)
+        st.html(f"<style>{_f.read()}</style>")
 if os.path.exists(_js_file):
     with open(_js_file, encoding="utf-8") as _f:
         components.html(f"<script>{_f.read()}</script>", height=0)
@@ -786,7 +786,7 @@ api_key = st.sidebar.text_input("Claude API key (optional)", type="password",
 # the dark animated background is not drawn on the AI assistant view
 cur_view = st.session_state.get("view", "")
 if bg_on:
-    st.markdown(build_bg(bg_level), unsafe_allow_html=True)
+    st.html(build_bg(bg_level))
 
 # ---------- image source ----------
 if src == "Dataset test image":
@@ -1150,7 +1150,7 @@ if view.startswith("🏭"):
 # =====================================================================
 if in_assistant:
     sound_slot.empty()                       # remove any old alert player
-    st.markdown(LIGHT_CSS, unsafe_allow_html=True)
+    st.html(LIGHT_CSS)
 
     mode = "Claude (API key found)" if api_key else "Built-in rules (offline)"
     st.markdown(f'<span class="botbadge">🤖</span> **Ask about the part you just inspected.**  '
