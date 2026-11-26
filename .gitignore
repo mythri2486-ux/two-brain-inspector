@@ -6,3 +6,4 @@ data/
 banks/
 outputs/
 .env
+cloudflared.exe
