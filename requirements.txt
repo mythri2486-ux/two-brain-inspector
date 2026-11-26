@@ -1,11 +1,14 @@
+@"
+--extra-index-url https://download.pytorch.org/whl/cpu
 torch
 torchvision
 numpy
 scipy
 scikit-learn
-opencv-python
+opencv-python-headless
 pillow
 matplotlib
 pandas
 streamlit
 anthropic
+"@ | Out-File -Encoding ascii requirements.txt

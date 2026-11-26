@@ -144,12 +144,20 @@ background:#0d1526!important;border:1px solid rgba(0,255,200,.4);border-radius:1
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
-import pathlib
-_here = pathlib.Path(__file__).parent
-st.markdown(f"<style>{(_here / 'style.css').read_text(encoding='utf-8')}</style>",
-            unsafe_allow_html=True)
-components.html(f"<script>{(_here / 'script.js').read_text(encoding='utf-8')}</script>",
-                height=0)
+
+# ---------------------------------------------------------------------
+# Optional extra styling and effects from separate files (style.css, script.js)
+# ---------------------------------------------------------------------
+_here = os.path.dirname(os.path.abspath(__file__))
+_css_file = os.path.join(_here, "style.css")
+_js_file = os.path.join(_here, "script.js")
+if os.path.exists(_css_file):
+    with open(_css_file, encoding="utf-8") as _f:
+        st.markdown(f"<style>{_f.read()}</style>", unsafe_allow_html=True)
+if os.path.exists(_js_file):
+    with open(_js_file, encoding="utf-8") as _f:
+        components.html(f"<script>{_f.read()}</script>", height=0)
+
 # ---------------------------------------------------------------------
 # Light, animated look used ONLY on the AI assistant view
 # ---------------------------------------------------------------------
@@ -359,8 +367,9 @@ def load(prod):
                        map_location="cpu", mmap=True)
     except Exception:
         d = torch.load(f"banks/{prod}_m2.pt", weights_only=False, map_location="cpu")
-    d["bank"] = d["bank"].to(pc.DEVICE)
-    d["lbanks"] = {k: v.to(pc.DEVICE) for k, v in d["lbanks"].items()}
+    # .float() converts banks saved in half precision back to full precision
+    d["bank"] = d["bank"].float().to(pc.DEVICE)
+    d["lbanks"] = {k: v.float().to(pc.DEVICE) for k, v in d["lbanks"].items()}
     return d
 
 
@@ -732,7 +741,10 @@ DOTS = '<div class="dots"><span></span><span></span><span></span></div>'
 
 # ---------- sidebar ----------
 st.sidebar.header("Settings")
-data_root = st.sidebar.text_input("MVTec AD folder", r"data\mvtec_ad")
+# Use the small demo dataset when it exists (for deployment); otherwise the full dataset.
+_demo = os.path.join("demo_data", "mvtec_ad")
+data_root = st.sidebar.text_input(
+    "MVTec AD folder", _demo if os.path.isdir(_demo) else os.path.join("data", "mvtec_ad"))
 prods = sorted(f.split("_m2")[0] for f in os.listdir("banks") if f.endswith("_m2.pt"))
 if not prods:
     st.error("No fitted banks found in banks/.")
@@ -784,6 +796,9 @@ if src == "Dataset test image":
     folders = sorted(os.listdir(test_dir))
     folder = source_slot.selectbox("Test folder", folders)
     files = sorted(glob.glob(os.path.join(test_dir, folder, "*.png")))
+    if not files:
+        st.error(f"No images in {os.path.join(test_dir, folder)}.")
+        st.stop()
     idx = 0 if len(files) == 1 else source_slot.slider("Image index", 0, len(files) - 1, 0)
     path = files[idx]
     rgb = read_rgb(path, bright)
@@ -1188,3 +1203,4 @@ if in_assistant:
     if chat and st.button("Clear chat"):
         st.session_state["chat"] = []
         st.rerun()
+        

@@ -1,9 +1,13 @@
+@"
 .venv2/
 .venv/
 __pycache__/
 *.pyc
 data/
-banks/
 outputs/
 .env
 cloudflared.exe
+"@ | Out-File -Encoding ascii .gitignorebanks/*
+!banks/bottle_m2.pt
+!banks/bottle_shift.json
+!banks/review_lo.json
