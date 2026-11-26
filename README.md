@@ -1,5 +1,7 @@
 ﻿# Two-Brain Inspector
 
+**Live demo:** PASTE-YOUR-ONRENDER-LINK-HERE
+
 A factory defect-detection app that learns from **good parts only**. It never sees a defect during training, yet it can flag scratches, cracks, contamination and misplaced parts. Built with PyTorch and Streamlit, and tested on the public [MVTec AD](https://www.mvtec.com/company/research/datasets/mvtec-ad) dataset.
 
 > Author: Mythri JM, Department of AI & ML, PES Institute of Technology & Management, Shivamogga
@@ -130,3 +132,4 @@ PyTorch, NumPy, SciPy, scikit-learn, OpenCV, Pillow, Matplotlib, Pandas, Streaml
 ## License
 
 Add a license of your choice here (for example MIT). Note that the MVTec AD dataset has its own license (CC BY-NC-SA 4.0).
+
