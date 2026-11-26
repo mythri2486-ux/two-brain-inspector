@@ -1,25 +1,8 @@
-# Two-Brain Inspector
+﻿# Two-Brain Inspector
 
 A factory defect-detection app that learns from **good parts only**. It never sees a defect during training, yet it can flag scratches, cracks, contamination and misplaced parts. Built with PyTorch and Streamlit, and tested on the public [MVTec AD](https://www.mvtec.com/company/research/datasets/mvtec-ad) dataset.
 
 > Author: Mythri JM, Department of AI & ML, PES Institute of Technology & Management, Shivamogga
-
----
-
-## Live demo
-
-**Try it in your browser:** [https://YOUR-LINK.trycloudflare.com](https://YOUR-LINK.trycloudflare.com)
-
-> The demo runs on the author's laptop, so it is only online during the presentation. If the link does not open, run the project locally using the steps in [Setup](#setup).
-
-### How to use the demo
-
-1. Pick a **Product** in the sidebar (for example `bottle`).
-2. Under **Image source**, choose **Dataset test image**.
-3. Select the `good` folder to see a **PASS**, then `broken_large` or `contamination` to see a **FAIL**.
-4. Drag the 3D viewer to turn the part, and open the **Conveyor scan** and **AI assistant** views.
-
-> Photos from the internet will be flagged as different, because the model only knows the training camera setup.
 
 ---
 
